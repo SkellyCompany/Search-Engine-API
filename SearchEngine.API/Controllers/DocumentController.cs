@@ -5,7 +5,7 @@ using SearchEngine.Core.Entity;
 
 namespace SearchEngine.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class DocumentController : ControllerBase
     {
