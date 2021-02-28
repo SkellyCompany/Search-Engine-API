@@ -24,6 +24,16 @@ namespace SearchEngine.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => {
+                options.AddPolicy("AllowAny",
+                builder => {
+                    builder.WithOrigins("http://localhost:3000");
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                    builder.AllowCredentials();
+                });
+            });
+
             services.Configure<SearchEngineDatabaseSettings>(Configuration.GetSection(nameof(SearchEngineDatabaseSettings)));
 
             services.AddSingleton<ISearchEngineDatabaseSettings, SearchEngineDatabaseSettings>(sp => 
@@ -32,7 +42,6 @@ namespace SearchEngine.API
             services.AddScoped<IDocumentRepo, DocumentRepo>();
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IClient, Client>();
-
 
             services.AddControllers();
 
@@ -47,7 +56,7 @@ namespace SearchEngine.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors("AllowAny");
 
             app.UseRouting();
 
