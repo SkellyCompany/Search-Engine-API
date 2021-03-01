@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SearchEngine.Core.AppServices;
 using SearchEngine.Core.Entity;
@@ -16,21 +17,10 @@ namespace SearchEngine.API.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public IActionResult GetAllDocumentsForASpecificTerm([FromQuery] Request request)
-        {
-            var result = _service.Search(request);
-            if (result.Documents.Any())
-                return Ok(result);
-            else
-                //return BadRequest(new { Message = "Aww, come on Greg..." });
-                return NoContent();
-        }
-
         [HttpGet("{id:length(24)}")]
-        public IActionResult GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            var result = _service.GetById(id);
+            var result = await _service.GetById(id);
             if (result != null)
                 return Ok(result);
             else
@@ -39,9 +29,9 @@ namespace SearchEngine.API.Controllers
         }
 
         [HttpGet("all")]
-        public IActionResult GetAllDocumentsFromDocTable()
+        public async Task<IActionResult> GetAllDocumentsFromDocTable()
         {
-            var result = _service.GetDocumentsFromDocTable();
+            var result = await _service.GetDocumentsFromDocTable();
             if (result.Any())
                 return Ok(result);
             else

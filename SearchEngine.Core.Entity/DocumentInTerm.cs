@@ -8,7 +8,7 @@ namespace SearchEngine.Core.Entity
         public string docId { get; set; }
         [BsonElement("url")]
         public string Url { get; set; }
-        [BsonElement("occurrence")]
+        [BsonElement("occurence")]
         public int Occurence { get; set; }
     }
 }

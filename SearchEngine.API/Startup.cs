@@ -40,7 +40,9 @@ namespace SearchEngine.API
                 sp.GetRequiredService<IOptions<SearchEngineDatabaseSettings>>().Value);
 
             services.AddScoped<IDocumentRepo, DocumentRepo>();
-            services.AddScoped<IDocumentService, DocumentService>();
+            services.AddScoped<IDocumentService, DocumentService>(); 
+            services.AddScoped<ITermRepo, TermRepo>();
+            services.AddScoped<ITermService, TermService>();
             services.AddScoped<IClient, Client>();
 
             services.AddControllers();

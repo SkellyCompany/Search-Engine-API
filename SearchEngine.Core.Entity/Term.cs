@@ -9,7 +9,7 @@ namespace SearchEngine.Core.Entity
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        [BsonElement("value")]
+        [BsonElement("name")]
         public string Value { get; set; }
         [BsonElement("documents")]
         public IEnumerable<DocumentInTerm> Documents { get; set; }

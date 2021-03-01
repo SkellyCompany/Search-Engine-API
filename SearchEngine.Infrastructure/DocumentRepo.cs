@@ -3,6 +3,7 @@ using SearchEngine.Core.DomainServices;
 using SearchEngine.Core.Entity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SearchEngine.Infrastructure
 {
@@ -14,15 +15,8 @@ namespace SearchEngine.Infrastructure
             _client = client;
         }
 
-        public IEnumerable<DocumentInTerm> Search(string term)
-        {
-            var terms = _client.GetTerms();
-            var res = terms.Find(t => t.Value == term).FirstOrDefault();
-            return res.Documents;
-        }
+        public async Task<IEnumerable<Document>> GetDocumentsFromDocTable() => await _client.GetDocuments().Find(_ => true).ToListAsync();
 
-        public IEnumerable<Document> GetDocumentsFromDocTable() => _client.GetDocuments().Find(_ => true).ToList();
-
-        public Document GetById(string id) => _client.GetDocuments().Find(doc => doc.Id == id).FirstOrDefault();
+        public async Task<Document> GetById(string id) => await _client.GetDocuments().Find(doc => doc.Id == id).FirstAsync();
     }
 }

@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 
 namespace SearchEngine.Core.DomainServices
 {
-    public interface IDocumentRepo
+    public interface ITermRepo
     {
-        Task<Document> GetById(string id);
-        Task<IEnumerable<Document>> GetDocumentsFromDocTable();
+        Task<IEnumerable<DocumentInTerm>> Search(string term);
     }
 }
