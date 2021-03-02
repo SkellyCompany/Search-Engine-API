@@ -24,6 +24,11 @@ namespace SearchEngine.Core.AppServices.Implementation
 
             var documents = await _repo.Search(request.Keyword);
 
+            if (documents == null)
+            {
+                return null;
+            }
+
             if (!IsAll(request))
             {
                 var response = new Response() { PageNumber = request.PageNumber, PageCount = request.PageCount, PageSize = request.PageSize, Documents = documents };
