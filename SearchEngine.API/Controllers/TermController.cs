@@ -22,7 +22,7 @@ namespace SearchEngine.API.Controllers
         {
             var result = await _service.Search(request);
             if (result != null && result.Documents.Any())
-                return Ok(result);
+                return Ok(result.Documents);
             else
                 //return BadRequest(new { Message = "Aww, come on Greg..." });
                 return NoContent();
