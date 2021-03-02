@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SearchEngine.Core.DomainServices
+namespace SearchEngine.Core.ApplicationServices
 {
-    public interface IDocumentRepo
+    public interface IDocumentService
     {
         Task<Document> GetById(string id);
         Task<IEnumerable<Document>> GetDocumentsFromDocTable();

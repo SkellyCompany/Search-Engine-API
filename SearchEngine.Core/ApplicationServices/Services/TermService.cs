@@ -4,15 +4,15 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SearchEngine.Core.AppServices.Implementation
+namespace SearchEngine.Core.ApplicationServices.Services
 {
     public class TermService : ITermService
     {
-        private readonly ITermRepo _repo;
+        private readonly ITermRepository _repository;
 
-        public TermService(ITermRepo repo)
+        public TermService(ITermRepository repository)
         {
-            _repo = repo;
+            _repository = repository;
         }
 
         public async Task<Response> Search(Request request)
@@ -22,7 +22,7 @@ namespace SearchEngine.Core.AppServices.Implementation
                 throw new ArgumentException("Term cannot be null or empty.");
             }
 
-            var documents = await _repo.Search(request.Keyword);
+            var documents = await _repository.Search(request.Keyword);
 
             if (!IsAll(request))
             {

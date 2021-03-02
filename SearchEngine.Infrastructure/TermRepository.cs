@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SearchEngine.Infrastructure
 {
-    public class TermRepo : ITermRepo
+    public class TermRepository : ITermRepository
     {
         private readonly IClient _client;
 
-        public TermRepo(IClient client)
+        public TermRepository(IClient client)
         {
             _client = client;
         }

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace SearchEngine.Infrastructure
 {
-    public class DocumentRepo : IDocumentRepo
+    public class DocumentRepository : IDocumentRepository
     {
         private readonly IClient _client;
-        public DocumentRepo(IClient client)
+        public DocumentRepository(IClient client)
         {
             _client = client;
         }

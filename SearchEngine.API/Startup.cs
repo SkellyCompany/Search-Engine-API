@@ -4,8 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using SearchEngine.Core.AppServices;
-using SearchEngine.Core.AppServices.Implementation;
+using SearchEngine.Core.ApplicationServices;
+using SearchEngine.Core.ApplicationServices.Services;
 using SearchEngine.Core.DomainServices;
 using SearchEngine.Core.Entity;
 using SearchEngine.Infrastructure;
@@ -39,9 +39,9 @@ namespace SearchEngine.API
             services.AddSingleton<ISearchEngineDatabaseSettings, SearchEngineDatabaseSettings>(sp => 
                 sp.GetRequiredService<IOptions<SearchEngineDatabaseSettings>>().Value);
 
-            services.AddScoped<IDocumentRepo, DocumentRepo>();
+            services.AddScoped<IDocumentRepository, DocumentRepository>();
             services.AddScoped<IDocumentService, DocumentService>(); 
-            services.AddScoped<ITermRepo, TermRepo>();
+            services.AddScoped<ITermRepository, TermRepository>();
             services.AddScoped<ITermService, TermService>();
             services.AddScoped<IClient, Client>();
 

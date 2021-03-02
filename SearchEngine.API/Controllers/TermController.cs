@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SearchEngine.Core.AppServices;
+using SearchEngine.Core.ApplicationServices;
 using SearchEngine.Core.Entity;
 using System.Linq;
 using System.Threading.Tasks;
