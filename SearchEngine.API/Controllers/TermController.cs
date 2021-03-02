@@ -21,7 +21,7 @@ namespace SearchEngine.API.Controllers
         public async Task<IActionResult> GetAllDocumentsForASpecificTerm([FromQuery] Request request)
         {
             var result = await _service.Search(request);
-            if (result.Documents.Any())
+            if (result != null && result.Documents.Any())
                 return Ok(result);
             else
                 //return BadRequest(new { Message = "Aww, come on Greg..." });
