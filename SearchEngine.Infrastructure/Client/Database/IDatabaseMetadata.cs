@@ -1,9 +1,7 @@
 namespace SearchEngine.Infrastructure.Client.Database
 {
-    public interface ISearchEngineDatabaseSettings
+    public interface IDatabaseMetadata
     {
-        string ConnectionString { get; set; }
-        string DatabaseName { get; set; }
         string DocumentsCollectionName { get; set; }
         string TermsCollectionName { get; set; }
     }

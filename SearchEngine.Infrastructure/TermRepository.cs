@@ -4,6 +4,8 @@ using SearchEngine.Core.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SearchEngine.Infrastructure.Client;
+using SearchEngine.Infrastructure.Client.Database;
 
 namespace SearchEngine.Infrastructure
 {
@@ -18,13 +20,19 @@ namespace SearchEngine.Infrastructure
 
         public async Task<IEnumerable<DocumentInTerm>> Search(string term)
         {
-            var terms = _client.GetTerms();
-            var ts = await terms.Find(t => t.Value == term).ToListAsync();
-            var res = ts.FirstOrDefault();
-            if (res != null)
+            var terms = await _client
+                .TermsCollection
+                .Find(t => t.Value == term)
+                .ToListAsync();
+            var res = terms.FirstOrDefault();
+            if (res != null) 
+            {
                 return res.Documents;
-            else
+            }
+            else 
+            {
                 return null;
+            }
         }
     }
 }

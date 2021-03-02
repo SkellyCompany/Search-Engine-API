@@ -1,11 +1,12 @@
 ﻿using MongoDB.Driver;
 using SearchEngine.Core.Entity;
 
-namespace SearchEngine.Core.DomainServices
+namespace SearchEngine.Infrastructure.Client
 {
     public interface IClient
     {
-        IMongoCollection<Document> GetDocuments();
-        IMongoCollection<Term> GetTerms();
+        IMongoDatabase Database { get; }
+        IMongoCollection<Document> DocumentsCollection { get; }
+        IMongoCollection<Term> TermsCollection { get; }
     }
 }

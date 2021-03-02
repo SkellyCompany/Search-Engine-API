@@ -9,6 +9,8 @@ using SearchEngine.Core.ApplicationServices.Services;
 using SearchEngine.Core.DomainServices;
 using SearchEngine.Core.Entity;
 using SearchEngine.Infrastructure;
+using SearchEngine.Infrastructure.Client;
+using SearchEngine.Infrastructure.Client.Database;
 
 namespace SearchEngine.API
 {
@@ -34,10 +36,13 @@ namespace SearchEngine.API
                 });
             });
 
-            services.Configure<SearchEngineDatabaseSettings>(Configuration.GetSection(nameof(SearchEngineDatabaseSettings)));
+            services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
+            services.Configure<DatabaseMetadata>(Configuration.GetSection(nameof(DatabaseMetadata)));
 
-            services.AddSingleton<ISearchEngineDatabaseSettings, SearchEngineDatabaseSettings>(sp => 
-                sp.GetRequiredService<IOptions<SearchEngineDatabaseSettings>>().Value);
+            services.AddSingleton<IDatabaseSettings, DatabaseSettings>(sp => 
+                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+            services.AddSingleton<IDatabaseMetadata, DatabaseMetadata>(sp => 
+                sp.GetRequiredService<IOptions<DatabaseMetadata>>().Value);
 
             services.AddScoped<IDocumentRepository, DocumentRepository>();
             services.AddScoped<IDocumentService, DocumentService>(); 
