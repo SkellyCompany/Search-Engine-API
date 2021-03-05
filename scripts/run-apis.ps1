@@ -4,9 +4,17 @@ $numOfProc = $args[0]
 
 if ($numOfProc -lt 2) { $numOfProc = 1 }
 
-for ($i = 1; $i -lt $numOfProc; $i+=1) 
+if ($numOfProc -gt 10) { Write-Error 'No more than 10 processes!' }
+
+$commands = @()
+
+for ($i = 0; $i -lt $numOfProc; $i+=1)
 {
-    start powershell { dotnet watch run --urls=http://localhost:5002/ }
+    $commands += "dotnet watch run --urls=https://localhost:500" + ($i).ToString() + "/;http://localhost:510" + ($i).ToString() + "/"
 }
 
-dotnet watch run --urls=http://localhost:5000/
+foreach($command in $commands) 
+{
+    $startCommand = "start powershell { " + $command + "; Read-Host }"
+    Invoke-Expression $startCommand
+}
