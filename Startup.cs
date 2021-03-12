@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using SearchEngine.API.Core.ApplicationServices;
 using SearchEngine.API.Core.ApplicationServices.Services;
 using SearchEngine.API.Core.DomainServices;
@@ -25,10 +26,12 @@ namespace SearchEngine.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options => {
-                options.AddPolicy("AllowAny",
-                builder => {
-                    builder.WithOrigins("http://localhost:3000");
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowLoadBalancer",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:5000");
                     builder.AllowAnyHeader();
                     builder.AllowAnyMethod();
                     builder.AllowCredentials();
@@ -38,20 +41,22 @@ namespace SearchEngine.API
             services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
             services.Configure<DatabaseMetadata>(Configuration.GetSection(nameof(DatabaseMetadata)));
 
-            services.AddSingleton<IDatabaseSettings, DatabaseSettings>(sp => 
+            services.AddSingleton<IDatabaseSettings, DatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
-            services.AddSingleton<IDatabaseMetadata, DatabaseMetadata>(sp => 
+            services.AddSingleton<IDatabaseMetadata, DatabaseMetadata>(sp =>
                 sp.GetRequiredService<IOptions<DatabaseMetadata>>().Value);
 
             services.AddScoped<IDocumentRepository, DocumentRepository>();
-            services.AddScoped<IDocumentService, DocumentService>(); 
+            services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<ITermRepository, TermRepository>();
             services.AddScoped<ITermService, TermService>();
             services.AddScoped<IClient, Client>();
 
             services.AddControllers();
-
-            services.AddMvc();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SearchEngine - API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,9 +65,11 @@ namespace SearchEngine.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SearchEngine - API v1"));
             }
 
-            app.UseCors("AllowAny");
+            app.UseCors("AllowLoadBalancer");
 
             app.UseRouting();
 
