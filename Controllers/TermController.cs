@@ -24,7 +24,6 @@ namespace SearchEngine.API.Controllers
             if (result != null && result.Documents.Any())
                 return Ok(result.Documents);
             else
-                //return BadRequest(new { Message = "Aww, come on Greg..." });
                 return NoContent();
         }
     }
