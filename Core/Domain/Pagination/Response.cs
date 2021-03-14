@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using SearchEngine.API.Core.Domain.Entity;
 
-namespace SearchEngine.API.Core.Entity
+namespace SearchEngine.API.Core.Domain.Pagination
 {
     public class Response
     {

@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace SearchEngine.API.Core.Entity
+namespace SearchEngine.API.Core.Domain.Entity
 {
     public class Term
     {

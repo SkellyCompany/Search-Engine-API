@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SearchEngine.API.Core.Entity
+﻿namespace SearchEngine.API.Core.Domain.Pagination
 {
     public class Request
     {

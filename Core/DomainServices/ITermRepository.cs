@@ -1,4 +1,4 @@
-﻿using SearchEngine.API.Core.Entity;
+﻿using SearchEngine.API.Core.Domain.Entity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

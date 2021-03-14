@@ -1,5 +1,5 @@
-﻿using SearchEngine.API.Core.DomainServices;
-using SearchEngine.API.Core.Entity;
+﻿using SearchEngine.API.Core.Domain.Pagination;
+using SearchEngine.API.Core.DomainServices;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

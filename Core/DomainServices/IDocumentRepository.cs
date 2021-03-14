@@ -1,6 +1,6 @@
-﻿using SearchEngine.API.Core.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using SearchEngine.API.Core.Domain.Entity;
 
 namespace SearchEngine.API.Core.DomainServices
 {

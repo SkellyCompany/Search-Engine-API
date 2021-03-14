@@ -1,5 +1,5 @@
-﻿using SearchEngine.API.Core.DomainServices;
-using SearchEngine.API.Core.Entity;
+﻿using SearchEngine.API.Core.Domain.Entity;
+using SearchEngine.API.Core.DomainServices;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SearchEngine.API.Core.ApplicationServices;
-using SearchEngine.API.Core.Entity;
+using SearchEngine.API.Core.Domain.Pagination;
 using System.Linq;
 using System.Threading.Tasks;
 

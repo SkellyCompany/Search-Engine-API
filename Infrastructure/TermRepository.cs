@@ -1,10 +1,10 @@
 ﻿using MongoDB.Driver;
 using SearchEngine.API.Core.DomainServices;
-using SearchEngine.API.Core.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SearchEngine.API.Infrastructure.Client;
+using SearchEngine.API.Core.Domain.Entity;
 
 namespace SearchEngine.API.Infrastructure
 {
@@ -24,11 +24,11 @@ namespace SearchEngine.API.Infrastructure
                 .Find(t => t.Value == term)
                 .ToListAsync();
             var res = terms.FirstOrDefault();
-            if (res != null) 
+            if (res != null)
             {
                 return res.Documents;
             }
-            else 
+            else
             {
                 return null;
             }

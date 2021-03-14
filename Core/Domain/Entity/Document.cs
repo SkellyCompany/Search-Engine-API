@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace SearchEngine.API.Core.Entity
+namespace SearchEngine.API.Core.Domain.Entity
 {
     public class Document
     {

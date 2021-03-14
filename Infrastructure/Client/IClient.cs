@@ -1,5 +1,5 @@
 ﻿using MongoDB.Driver;
-using SearchEngine.API.Core.Entity;
+using SearchEngine.API.Core.Domain.Entity;
 
 namespace SearchEngine.API.Infrastructure.Client
 {

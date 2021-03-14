@@ -1,4 +1,4 @@
-﻿using SearchEngine.API.Core.Entity;
+﻿using SearchEngine.API.Core.Domain.Pagination;
 using System.Threading.Tasks;
 
 namespace SearchEngine.API.Core.ApplicationServices
