@@ -8,5 +8,6 @@ namespace SearchEngine.API.Infrastructure.Client
         IMongoDatabase Database { get; }
         IMongoCollection<Document> DocumentsCollection { get; }
         IMongoCollection<Term> TermsCollection { get; }
+        IMongoCollection<SearchHistory> SearchHistoryCollection { get; }
     }
 }

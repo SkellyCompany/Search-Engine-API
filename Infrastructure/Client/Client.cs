@@ -23,6 +23,13 @@ namespace SearchEngine.API.Infrastructure.Client
                 return Database.GetCollection<Term>(_dbMetadata.TermsCollectionName);
             }
         }
+        public IMongoCollection<SearchHistory> SearchHistoryCollection
+        {
+            get
+            {
+                return Database.GetCollection<SearchHistory>(_dbMetadata.SearchHistoryCollectionName);
+            }
+        }
 
         public Client(IDatabaseSettings dbSettings, IDatabaseMetadata dbMetadata)
         {
