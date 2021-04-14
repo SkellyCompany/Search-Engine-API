@@ -29,7 +29,7 @@ namespace SearchEngine.API.Infrastructure
 		public SearchHistory Edit(SearchHistory searchHistory)
 		{
 			FilterDefinition<SearchHistory> filter = Builders<SearchHistory>.Filter.Eq("keyword", searchHistory.Keyword);
-			UpdateDefinition<SearchHistory> update = Builders<SearchHistory>.Update.Push(sh => sh.Dates, searchHistory.Dates[0]);
+			UpdateDefinition<SearchHistory> update = Builders<SearchHistory>.Update.Set("dates", searchHistory.Dates);
 			_client.SearchHistoryCollection.UpdateOne(filter, update);
 			return searchHistory;
 		}
