@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace SearchEngine.API.Core.ApplicationServices.Services {
 	public class SearchHistoryService : ISearchHistoryService {
+
 		private ISearchHistoryRepository _searchHistoryRepository;
 
 		public SearchHistoryService(ISearchHistoryRepository searchHistoryRepository) {
@@ -16,7 +17,7 @@ namespace SearchEngine.API.Core.ApplicationServices.Services {
 			_searchHistoryRepository.Delete(keyword);
 		}
 
-		public IEnumerable<string> Read(string keyword, int maxAmount = 10) {
+		public IEnumerable<string> ReadAsync(string keyword, int maxAmount = 10) {
 			IEnumerable<SearchHistoryRecord> searchHistories = _searchHistoryRepository.GetAll();
 
 			//If no keyword string exists
@@ -61,10 +62,10 @@ namespace SearchEngine.API.Core.ApplicationServices.Services {
 				search.Dates = new List<DateTime>();
 				search.Dates.Add(DateTime.Now);
 				search.Term = keyword;
-				_searchHistoryRepository.Add(search);
+				_searchHistoryRepository.Create(search);
 			} else {
 				search.Dates.Add(DateTime.Now);
-				_searchHistoryRepository.Edit(search);
+				_searchHistoryRepository.Update(search);
 			}
 		}
 	}

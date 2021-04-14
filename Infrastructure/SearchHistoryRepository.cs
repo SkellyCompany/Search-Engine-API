@@ -12,7 +12,7 @@ namespace SearchEngine.API.Infrastructure {
 			_client = client;
 		}
 
-		public SearchHistoryRecord Add(SearchHistoryRecord searchHistory) {
+		public SearchHistoryRecord Create(SearchHistoryRecord searchHistory) {
 			_client.SearchHistoryCollection.InsertOne(searchHistory);
 			return searchHistory;
 		}
@@ -21,7 +21,7 @@ namespace SearchEngine.API.Infrastructure {
 			return _client.SearchHistoryCollection.DeleteOne(k => k.Term == keyword).IsAcknowledged;
 		}
 
-		public SearchHistoryRecord Edit(SearchHistoryRecord searchHistory) {
+		public SearchHistoryRecord Update(SearchHistoryRecord searchHistory) {
 			FilterDefinition<SearchHistoryRecord> filter = Builders<SearchHistoryRecord>.Filter.Eq("keyword", searchHistory.Term);
 			UpdateDefinition<SearchHistoryRecord> update = Builders<SearchHistoryRecord>.Update.Set("dates", searchHistory.Dates);
 			_client.SearchHistoryCollection.UpdateOne(filter, update);

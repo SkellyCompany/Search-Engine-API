@@ -43,7 +43,7 @@ namespace SearchEngine.API {
 			services.AddScoped<ISearchHistoryRepository, SearchHistoryRepository>();
 			services.AddScoped<ISearchHistoryService, SearchHistoryService>();
 			services.AddScoped<ITermRepository, TermRepository>();
-			services.AddScoped<ITermService, TermService>();
+			services.AddScoped<IDocumentService, DocumentService>();
 			services.AddScoped<IClient, Client>();
 
 			services.AddControllers();

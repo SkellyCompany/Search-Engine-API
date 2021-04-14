@@ -13,8 +13,8 @@ namespace SearchEngine.API.Controllers {
 		}
 
 		[HttpGet()]
-		public IActionResult Get([FromQuery] string keyword, [FromQuery] int maxAmount) {
-			IEnumerable<string> searchHistory = _searchHistoryService.Read(keyword, maxAmount);
+		public ActionResult<List<string>> Get([FromQuery] string keyword, [FromQuery] int maxAmount) {
+			IEnumerable<string> searchHistory = _searchHistoryService.ReadAsync(keyword, maxAmount);
 			return Ok(searchHistory);
 		}
 

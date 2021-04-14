@@ -12,6 +12,6 @@ namespace SearchEngine.API.Core.Domain.Entity {
 		public string Value { get; set; }
 
 		[BsonElement("documents")]
-		public IEnumerable<DocumentInTerm> Documents { get; set; }
+		public IEnumerable<Document> Documents { get; set; }
 	}
 }

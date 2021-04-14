@@ -5,8 +5,8 @@ using System.Collections.Generic;
 namespace SearchEngine.API.Core.DomainServices {
 	public interface ISearchHistoryRepository {
 		IEnumerable<SearchHistoryRecord> GetAll();
-		SearchHistoryRecord Add(SearchHistoryRecord searchHistory);
-		SearchHistoryRecord Edit(SearchHistoryRecord searchHistory);
+		SearchHistoryRecord Create(SearchHistoryRecord searchHistory);
+		SearchHistoryRecord Update(SearchHistoryRecord searchHistory);
 		bool Delete(string keyword);
 	}
 }
