@@ -1,9 +1,7 @@
-namespace SearchEngine.API.Infrastructure.Client.Database
-{
-    public class DatabaseMetadata : IDatabaseMetadata
-    {
-        public string DocumentsCollectionName { get; set; }
-        public string TermsCollectionName { get; set; }
-        public string SearchHistoryCollectionName { get; set; }
-    }
+namespace SearchEngine.API.Infrastructure.Client.Database {
+	public class DatabaseMetadata : IDatabaseMetadata {
+		public string DocumentsCollectionName { get; set; }
+		public string TermsCollectionName { get; set; }
+		public string SearchHistoryRecordCollectionName { get; set; }
+	}
 }

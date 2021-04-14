@@ -4,94 +4,68 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SearchEngine.API.Core.ApplicationServices.Services
-{
-	public class SearchHistoryService : ISearchHistoryService
-	{
+namespace SearchEngine.API.Core.ApplicationServices.Services {
+	public class SearchHistoryService : ISearchHistoryService {
 		private ISearchHistoryRepository _searchHistoryRepository;
-		private int _defaultMaxAmount = 10;
 
-
-		public SearchHistoryService(ISearchHistoryRepository searchHistoryRepository)
-		{
+		public SearchHistoryService(ISearchHistoryRepository searchHistoryRepository) {
 			_searchHistoryRepository = searchHistoryRepository;
 		}
 
-		public void DeleteKeywordFromHistory(string keyword)
-		{
-            _searchHistoryRepository.Delete(keyword);
+		public void DeleteAsync(string keyword) {
+			_searchHistoryRepository.Delete(keyword);
 		}
 
-		public IEnumerable<string> GetHistory(string keyword, int maxAmount = 10)
-		{
-            IEnumerable<SearchHistory> searchHistories = _searchHistoryRepository.GetAll();
+		public IEnumerable<string> Read(string keyword, int maxAmount = 10) {
+			IEnumerable<SearchHistoryRecord> searchHistories = _searchHistoryRepository.GetAll();
 
-            //Since "Nothing" / "null" for an int, is 0 a 0 check is placed here to replace the int 
-            //with a default max amount for the class.
-            if (maxAmount == 0)
-            {
-                maxAmount = _defaultMaxAmount;
-            }
+			//If no keyword string exists
+			if (keyword == null || keyword == "") {
+				List<string> strings = new List<string>();
+				foreach (var item in searchHistories.
+					OrderByDescending(search => search.Dates.Count).
+					ThenByDescending(search => search.Dates[search.Dates.Count - 1]).
+					Take(maxAmount).ToList()) {
+					strings.Add(item.Term);
+				};
+				return strings;
+			}
 
-            //If no keyword string exists
-            if (keyword == null || keyword == "")
-            {
-                List<string> strings = new List<string>();
-                foreach (var item in searchHistories.
-                    OrderByDescending(search => search.Dates.Count).
-                    ThenByDescending(search => search.Dates[search.Dates.Count - 1]).
-                    Take(maxAmount).ToList())
-                {
-                    strings.Add(item.Keyword);
-                };
-                return strings;
-            }
+			//Else if there is a keyword.
+			else {
+				List<string> strings = new List<string>();
+				foreach (SearchHistoryRecord searchHistory in searchHistories) {
+					if (searchHistory.Term.ToLower().Contains(keyword.ToLower())) {
+						strings.Add(searchHistory.Term);
+						if (strings.Count == maxAmount) {
+							break;
+						}
+					}
+				}
+				return strings;
+			}
+		}
 
-            //Else if there is a keyword. 
-            else
-            {
-                List<string> strings = new List<string>();
-                foreach (SearchHistory searchHistory in searchHistories)
-                {
-                    if (searchHistory.Keyword.ToLower().Contains(keyword.ToLower()))
-                    {
-                        strings.Add(searchHistory.Keyword);
-                        if (strings.Count == maxAmount)
-                        {
-                            break;
-                        }
-                    }
-                }
-                return strings;
-            }
-        }
+		public void SaveAsync(string keyword) {
+			IEnumerable<SearchHistoryRecord> searchHistories = _searchHistoryRepository.GetAll();
+			SearchHistoryRecord search = null;
+			foreach (SearchHistoryRecord searchHistory in searchHistories) {
+				if (searchHistory.Term.ToLower().Equals(keyword.ToLower())) {
+					search = searchHistory;
+					break;
+				}
+			}
 
-		public void SaveHistory(string keyword)
-		{
-            IEnumerable<SearchHistory> searchHistories = _searchHistoryRepository.GetAll();
-            SearchHistory search = null;
-            foreach (SearchHistory searchHistory in searchHistories)
-            {
-                if (searchHistory.Keyword.ToLower().Equals(keyword.ToLower()))
-                {
-                    search = searchHistory;
-                    break;
-                }
-            }
-
-            if (search == null)
-            {
-                search = new SearchHistory();
-                search.Dates = new List<DateTime>();
-                search.Dates.Add(DateTime.Now);
-                search.Keyword = keyword;
-                _searchHistoryRepository.Add(search);
-            }
-            else
-            {
-                search.Dates.Add(DateTime.Now);
-                _searchHistoryRepository.Edit(search);
-            }
-        }
+			if (search == null) {
+				search = new SearchHistoryRecord();
+				search.Dates = new List<DateTime>();
+				search.Dates.Add(DateTime.Now);
+				search.Term = keyword;
+				_searchHistoryRepository.Add(search);
+			} else {
+				search.Dates.Add(DateTime.Now);
+				_searchHistoryRepository.Edit(search);
+			}
+		}
 	}
 }

@@ -4,38 +4,31 @@ using SearchEngine.API.Infrastructure.Client;
 using System.Collections.Generic;
 using MongoDB.Driver;
 
-namespace SearchEngine.API.Infrastructure
-{
-	public class SearchHistoryRepository : ISearchHistoryRepository
-	{
+namespace SearchEngine.API.Infrastructure {
+	public class SearchHistoryRepository : ISearchHistoryRepository {
 		private readonly IClient _client;
 
-		public SearchHistoryRepository(IClient client)
-		{
+		public SearchHistoryRepository(IClient client) {
 			_client = client;
 		}
 
-		public SearchHistory Add(SearchHistory searchHistory)
-		{
+		public SearchHistoryRecord Add(SearchHistoryRecord searchHistory) {
 			_client.SearchHistoryCollection.InsertOne(searchHistory);
 			return searchHistory;
 		}
 
-		public bool Delete(string keyword)
-		{
-			return _client.SearchHistoryCollection.DeleteOne(k => k.Keyword == keyword).IsAcknowledged;
+		public bool Delete(string keyword) {
+			return _client.SearchHistoryCollection.DeleteOne(k => k.Term == keyword).IsAcknowledged;
 		}
 
-		public SearchHistory Edit(SearchHistory searchHistory)
-		{
-			FilterDefinition<SearchHistory> filter = Builders<SearchHistory>.Filter.Eq("keyword", searchHistory.Keyword);
-			UpdateDefinition<SearchHistory> update = Builders<SearchHistory>.Update.Set("dates", searchHistory.Dates);
+		public SearchHistoryRecord Edit(SearchHistoryRecord searchHistory) {
+			FilterDefinition<SearchHistoryRecord> filter = Builders<SearchHistoryRecord>.Filter.Eq("keyword", searchHistory.Term);
+			UpdateDefinition<SearchHistoryRecord> update = Builders<SearchHistoryRecord>.Update.Set("dates", searchHistory.Dates);
 			_client.SearchHistoryCollection.UpdateOne(filter, update);
 			return searchHistory;
 		}
 
-		public IEnumerable<SearchHistory> GetAll()
-		{
+		public IEnumerable<SearchHistoryRecord> GetAll() {
 			return _client.SearchHistoryCollection.Find(_ => true).ToList();
 		}
 	}

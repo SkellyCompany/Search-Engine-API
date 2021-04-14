@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SearchEngine.API.Core.DomainServices
-{
-    public interface ITermRepository
-    {
-        Task<IEnumerable<DocumentInTerm>> Search(string term);
-    }
+namespace SearchEngine.API.Core.DomainServices {
+	public interface ITermRepository {
+		Task<IEnumerable<DocumentInTerm>> Search(string term);
+	}
 }
